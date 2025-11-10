@@ -336,7 +336,7 @@ run_one_container (uint8_t *buf, size_t len, bool detach)
     }
 
   memset (&ctx, 0, sizeof (ctx));
-  sprintf (id, "fuzzer-%d-%llu", getpid (), counter++);
+  snprintf (id, sizeof (id), "fuzzer-%d-%llu", getpid (), counter++);
   ctx.id = id;
   ctx.bundle = "rootfs";
   ctx.detach = detach;
@@ -463,7 +463,7 @@ LLVMFuzzerTestOneInput (uint8_t *buf, size_t len)
 }
 
 static void
-sig_chld (int)
+sig_chld (int sig arg_unused)
 {
   int status;
   pid_t p;
